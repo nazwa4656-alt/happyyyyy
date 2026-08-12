@@ -191,7 +191,7 @@
             50% { opacity: 1; }
         }
 
-        /* KALENDER PASSWORD */
+        /* KALENDER */
         .calendar-box {
             max-width: 340px;
             margin: 28px auto 18px;
@@ -274,6 +274,23 @@
         .cal-day.empty {
             background: transparent;
             cursor: default;
+        }
+
+        .year-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .year-btn {
+            padding: 8px 14px !important;
+            font-size: 12px !important;
+        }
+
+        .year-btn.active {
+            background: #2e7d32 !important;
         }
 
         .salah-love {
@@ -656,15 +673,24 @@
 </head>
 <body>
 
+<!-- MUSIK -->
 <audio id="bgMusic" loop preload="auto">
     <source src="Soft.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="otherMusic" preload="auto">
+    <source src="Lagu Lain.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="cakeMusic" preload="auto">
+    <source src="Tiup Lilin.mp3" type="audio/mpeg">
 </audio>
 
 <!-- PAGE 1 -->
 <section class="page active" id="page1">
     <div class="content">
         <div class="eyebrow">one little thing</div>
-        <h1 class="title">hey, happy birthday arman.</h1>
+        <h1 class="title">halloo, happy birthday arman.</h1>
         <p class="subtitle">
             aku bikin sesuatu hehehe<br>
             di buka yaaa
@@ -695,16 +721,27 @@
         <h1 class="title">19 little loves.</h1>
         <p class="subtitle">
             tapi sebelum itu...<br>
-            <strong></strong> 👀
+            pilih tanggal & tahun yang benar 👀
         </p>
 
-        <!-- KALENDER PASSWORD -->
+        <!-- KALENDER -->
         <div class="calendar-box" id="calendarBox">
             <div class="cal-header">pilih tanggalnya</div>
-            <div class="cal-sub">kalo bener, baru bisa lanjyut</div>
-            <div class="cal-month">AGUSTUS 2007</div>
+            <div class="cal-sub">pilih tanggal & tahun yang benar</div>
+            <div class="cal-month">AGUSTUS</div>
 
             <div class="cal-grid" id="calGrid"></div>
+
+            <div style="margin-top:14px; font-size:13px; color:#6f5846; font-weight:600;">
+                Pilih Tahun
+            </div>
+            <div class="year-buttons" id="yearButtons">
+                <button class="btn year-btn" data-year="2005">2005</button>
+                <button class="btn year-btn" data-year="2006">2006</button>
+                <button class="btn year-btn" data-year="2007">2007</button>
+                <button class="btn year-btn" data-year="2008">2008</button>
+                <button class="btn year-btn" data-year="2009">2009</button>
+            </div>
 
             <div class="salah-love" id="salahLove">
                 salah love <br>
@@ -775,10 +812,8 @@
         </div>
 
         <div class="music-box" id="musicBox">
-<audio id="cakeMusic" preload="auto">
-    <source src="Tiup Lilin.mp3" type="audio/mpeg">
-</audio>            <div class="music-name">Tiup lilin</div>
-            <div class="music-sub">huft · playing </div>
+            <div class="music-name">Lagu Spesial</div>
+            <div class="music-sub">playing for you 🤎</div>
             <div class="music-bar"><div class="music-fill"></div></div>
             <button class="btn" id="musicBtn" onclick="toggleMusic()">pause ♪</button>
         </div>
@@ -800,36 +835,377 @@
         </div>
 
         <div class="like-form" id="likeForm">
-            <div class="form-title">okay, .</div>
-            <div class="form-sub">diisi yaa. akuu penasaran 👀</div>
+            <div class="form-title">okay,</div>
+            <div class="form-sub">diisi yaa. 👀</div>
 
             <div class="field">
-                <label for="musicAnswer">🎵 Music</label>
-                <input id="musicAnswer" type="text" placeholder="lagu / penyanyi favorit">
+                <label for="musicAnswer">Tentang Aku</label>
+                <input id="musicAnswer" type="text" placeholder="apa ajaaa">
             </div>
+            
             <div class="field">
-                <label for="foodAnswer">🍜 Food</label>
-                <input id="foodAnswer" type="text" placeholder="makanan favorit">
-            </div>
-            <div class="field">
-                <label for="movieAnswer">🎬 Movie / Series</label>
-                <input id="movieAnswer" type="text" placeholder="film / series favorit">
-            </div>
-            <div class="field">
-                <label for="hobbyAnswer">🎮 Hobby</label>
-                <input id="hobbyAnswer" type="text" placeholder="hobi kamu">
-            </div>
-            <div class="field">
-                <label for="colorAnswer">🎨 Favorite Color</label>
-                <input id="colorAnswer" type="text" placeholder="warna favorit">
-            </div>
-            <div class="field">
-                <label for="randomAnswer">🤎 Random Thing</label>
+                <label for="randomAnswer">🤎 Tentang Kamuu</label>
                 <textarea id="randomAnswer" placeholder="apaa aja"></textarea>
             </div>
 
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jawaban Kamu 🤎</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 30px 15px;
+            background: #f5eee5;
+            font-family: Arial, sans-serif;
+            color: #4b4038;
+        }
+
+        .like-form {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 25px;
+            background: #fffdf9;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(80, 60, 40, 0.1);
+        }
+
+        .form-title {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-sub {
+            margin-bottom: 25px;
+            color: #8b7a6b;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px 15px;
+            border: 1px solid #ddd0c2;
+            border-radius: 14px;
+            outline: none;
+            background: #fffaf5;
+            color: #4b4038;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #b49a82;
+        }
+
+        .btn {
+            border: none;
+            padding: 13px 20px;
+            border-radius: 14px;
+            background: #6f5a48;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .saved {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 13px;
+            color: #8b7a6b;
+            line-height: 1.6;
+        }
+
+        /* HASIL JAWABAN */
+
+        #answerResult {
+            display: none;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px dashed #d8c8b8;
+        }
+
+        .answer-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .answer-box {
+            padding: 14px 16px;
+            background: #f8f0e7;
+            border-radius: 14px;
+            color: #4b4038;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="like-form">
+
+        <div class="form-title">
+            okay,
+        </div>
+
+        <div class="form-sub">
+            diisi yaa. 👀
+        </div>
+
+
+        <!-- TENTANG AKU -->
+
+        <div class="field">
+
+            <label for="musicAnswer">
+                Tentang Aku
+            </label>
+
+            <input
+                type="text"
+                id="musicAnswer"
+                placeholder="apa ajaaa"
+            >
+
+        </div>
+
+
+        <!-- TENTANG KAMU -->
+
+        <div class="field">
+
+            <label for="randomAnswer">
+                🤎 Tentang Kamuu
+            </label>
+
+            <textarea
+                id="randomAnswer"
+                placeholder="apaa aja"
+            ></textarea>
+
+        </div>
+
+
+        <!-- TOMBOL SIMPAN -->
+
+        <button
+            type="button"
+            class="btn"
+            id="saveButton"
+            style="width: 100%;"
+        >
+            simpan jawaban ✨
+        </button>
+
+
+        <!-- PESAN -->
+
+        <div
+            class="saved"
+            id="saved"
+        >
+            jawabannya yang zuzur yak<br>
+            makasi udah mau isi.
+        </div>
+
+
+        <!-- HASIL JAWABAN -->
+
+        <div id="answerResult">
+
+            <div class="answer-title">
+                jawaban kamu 🤎
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Tentang Aku
+                </label>
+
+                <div
+                    class="answer-box"
+                    id="showMusic"
+                ></div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    🤎 Tentang Kamuu
+                </label>
+
+                <div
+                    class="answer-box"
+                    id="showRandom"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // Ambil elemen
+
+        const musicInput =
+            document.getElementById("musicAnswer");
+
+        const randomInput =
+            document.getElementById("randomAnswer");
+
+        const saveButton =
+            document.getElementById("saveButton");
+
+        const answerResult =
+            document.getElementById("answerResult");
+
+        const showMusic =
+            document.getElementById("showMusic");
+
+        const showRandom =
+            document.getElementById("showRandom");
+
+        const saved =
+            document.getElementById("saved");
+
+
+        // Tombol simpan
+
+        saveButton.addEventListener("click", function () {
+
+            const musicAnswer =
+                musicInput.value.trim();
+
+            const randomAnswer =
+                randomInput.value.trim();
+
+
+            // Kalau belum diisi
+
+            if (
+                musicAnswer === "" &&
+                randomAnswer === ""
+            ) {
+
+                alert("diisi dulu yaa 👀");
+
+                return;
+            }
+
+
+            // Tampilkan jawaban
+
+            showMusic.textContent =
+                musicAnswer || "nggak diisi hehe";
+
+            showRandom.textContent =
+                randomAnswer || "nggak diisi hehe";
+
+
+            answerResult.style.display =
+                "block";
+
+
+            // Pesan setelah disimpan
+
+            saved.innerHTML =
+                "jawabannya udah disimpan 🤎<br>" +
+                "makasi udah mau isi.";
+
+
+            // Simpan di browser
+
+            localStorage.setItem(
+                "musicAnswer",
+                musicAnswer
+            );
+
+            localStorage.setItem(
+                "randomAnswer",
+                randomAnswer
+            );
+
+        });
+
+
+        // Ambil jawaban yang sudah pernah disimpan
+
+        const oldMusic =
+            localStorage.getItem("musicAnswer");
+
+        const oldRandom =
+            localStorage.getItem("randomAnswer");
+
+
+        if (
+            oldMusic !== null ||
+            oldRandom !== null
+        ) {
+
+            musicInput.value =
+                oldMusic || "";
+
+            randomInput.value =
+                oldRandom || "";
+
+
+            showMusic.textContent =
+                oldMusic || "nggak diisi hehe";
+
+            showRandom.textContent =
+                oldRandom || "nggak diisi hehe";
+
+
+            answerResult.style.display =
+                "block";
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+
             <button class="btn" style="width:100%;" onclick="saveLikes()">simpan jawaban ✨</button>
-            <div class="saved" id="saved">jawaban aku simpan di pikiran<br>makasi udah mau isi.</div>
+            <div class="saved" id="saved">jawabannya yang zuzur yak<br>makasi udah mau isi.</div>
         </div>
 
         <br>
@@ -844,11 +1220,17 @@
         <h1 class="title">one little note.</h1>
         <div class="note">
             <div class="note-text">
+                Kata kata dari nazzwwww
                 Semoga diulang tahun sekarang kamu jadi lebih baik.<br><br>
                 banyak hal baik datang satu per satu dan semoga apa yang kamu semogakan tercapaiii.<br><br>
-                Semoga hari ini juga jadi hari yang paing berkesan dihidup kamu.<br><br>
+                Semoga hari ini juga jadi hari yang paling berkesan dihidup kamu.<br><br>
                 Selalu semangattt Lovee buat jalani hari harii berikutnyaa
-                Happy Birthday.
+
+        
+ Naik odong-odong sambil joget,
+Turunnya malah nyasar ke salon.
+Happy birthday Arman imut,
+Semoga makin happy kalau sama aku
             </div>
         </div>
         <button class="btn" onclick="goToPage(5); createConfetti();">finish →</button>
@@ -862,8 +1244,8 @@
         <div class="eyebrow">that's it</div>
         <h1 class="title">happy birthday.</h1>
         <p class="subtitle">
-            semogaa kamuu sukaaa byeeee.<br>
-            see youuuuuu :)
+            semogaa kamuu sukaaa.<br>
+            byeeeeee :)
         </p>
         <button class="btn" onclick="location.reload()">replay ↻</button>
     </div>
@@ -872,7 +1254,12 @@
 <script>
     let envelopeOpened = false;
     let unlocked = false;
+    let selectedDay = null;
+    let selectedYear = null;
+
     const bgMusic = document.getElementById("bgMusic");
+    const otherMusic = document.getElementById("otherMusic");
+    const cakeMusic = document.getElementById("cakeMusic");
 
     function startMusic() {
         bgMusic.volume = 0.45;
@@ -884,8 +1271,14 @@
         loadLikes();
         startMusic();
         setTimeout(startMusic, 800);
-        setTimeout(startMusic, 2000);
         createCalendar();
+
+        // Event tombol tahun
+        document.querySelectorAll(".year-btn").forEach(btn => {
+            btn.addEventListener("click", function () {
+                selectYear(parseInt(this.dataset.year), this);
+            });
+        });
     });
 
     document.body.addEventListener("click", startMusic);
@@ -907,7 +1300,7 @@
         setTimeout(() => goToPage(2), 1500);
     }
 
-    /* KALENDER PASSWORD */
+    /* KALENDER */
     function createCalendar() {
         const grid = document.getElementById("calGrid");
         grid.innerHTML = "";
@@ -920,7 +1313,6 @@
             grid.appendChild(el);
         });
 
-        // Agustus 2007 mulai hari Rabu → kosong 3 kotak
         for (let i = 0; i < 3; i++) {
             const empty = document.createElement("div");
             empty.className = "cal-day empty";
@@ -939,22 +1331,33 @@
 
     function selectDate(day, btn) {
         startMusic();
-
-        document.querySelectorAll(".cal-day").forEach(b => {
-            b.classList.remove("selected", "correct");
-        });
-
+        document.querySelectorAll(".cal-day").forEach(b => b.classList.remove("selected", "correct"));
         btn.classList.add("selected");
+        selectedDay = day;
+        checkAnswer();
+    }
 
+    function selectYear(year, btn) {
+        startMusic();
+        document.querySelectorAll(".year-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        selectedYear = year;
+        checkAnswer();
+    }
+
+    function checkAnswer() {
         const salah = document.getElementById("salahLove");
         const benar = document.getElementById("benarLove");
 
-        if (day === 12) {
-            btn.classList.add("correct");
+        if (selectedDay === null || selectedYear === null) return;
+
+        if (selectedDay === 12 && selectedYear === 2007) {
+            document.querySelectorAll(".cal-day").forEach(b => {
+                if (b.innerText == "12") b.classList.add("correct");
+            });
             salah.style.display = "none";
             benar.style.display = "block";
             unlocked = true;
-
             createConfetti();
 
             setTimeout(() => {
@@ -969,7 +1372,7 @@
         }
     }
 
-    /* 19 LOVE — TANPA TULISAN DOA */
+    /* 19 LOVE */
     let loveCount = 0;
 
     const lovePositions = [
@@ -1008,7 +1411,6 @@
         createLoveBurst(button);
         updateLoveProgress();
 
-        // Hanya update progress, tanpa ganti tulisan doa
         if (loveCount < 19) {
             document.getElementById("loveSubtitle").innerText = "tinggal " + (19 - loveCount) + " lagi";
         } else {
@@ -1049,7 +1451,7 @@
 
     createLoveButtons();
 
-    /* MENU */
+    /* MENU & MUSIK */
     function hideMenuContent() {
         document.getElementById("musicBox").style.display = "none";
         document.getElementById("cakeBox").style.display = "none";
@@ -1057,31 +1459,59 @@
     }
 
     function openMenu(type) {
-        startMusic();
         hideMenuContent();
-        if (type === "music") document.getElementById("musicBox").style.display = "block";
-        if (type === "cake") document.getElementById("cakeBox").style.display = "block";
-        if (type === "likes") document.getElementById("likeForm").style.display = "block";
+
+        if (type === "music") {
+            // Matikan Soft
+            bgMusic.pause();
+            cakeMusic.pause();
+
+            // Nyalakan lagu lain
+            otherMusic.volume = 0.55;
+            otherMusic.currentTime = 0;
+            otherMusic.play().catch(() => {});
+
+            document.getElementById("musicBox").style.display = "block";
+        }
+
+        if (type === "cake") {
+            document.getElementById("cakeBox").style.display = "block";
+        }
+
+        if (type === "likes") {
+            document.getElementById("likeForm").style.display = "block";
+        }
     }
 
     function toggleMusic() {
         const button = document.getElementById("musicBtn");
-        if (bgMusic.paused) {
-            startMusic();
+
+        if (otherMusic.paused) {
+            bgMusic.pause();
+            cakeMusic.pause();
+            otherMusic.play().catch(() => {});
             button.innerText = "pause ♪";
         } else {
-            bgMusic.pause();
+            otherMusic.pause();
             button.innerText = "play ♪";
         }
     }
 
     function blowCandles() {
+        // Matikan musik lain
+        bgMusic.pause();
+        otherMusic.pause();
+
+        // Putar lagu tiup lilin
+        cakeMusic.volume = 0.65;
+        cakeMusic.currentTime = 0;
+        cakeMusic.play().catch(() => {});
+
         document.getElementById("cake").classList.add("blown");
         document.getElementById("cakeMessage").innerHTML = "✨ lilinnya mati.<br>semoga wish-nya terkabul satu-satu 🤎";
         document.getElementById("blowButton").innerText = "🎉 yay!";
         document.getElementById("blowButton").disabled = true;
         createConfetti();
-        startMusic();
     }
 
     function saveLikes() {
